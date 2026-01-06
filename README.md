@@ -33,6 +33,8 @@ Create a `.env` file in the root directory of your project and add the values va
 
 ```bash
 cp .env-example .env
+```
+
 ```bash
 Then, open the `.env` file and set the appropriate values for each variable according to your setup.
 ```
