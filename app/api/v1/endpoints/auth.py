@@ -8,6 +8,7 @@ router = APIRouter()
 def register(user_data):
     # Lógica para registrar un nuevo usuario
     return {"msg": "User registered successfully"}
+
 @router.post("/login")
 def login():
     # Lógica para autenticar al usuario y generar un token JWT
