@@ -35,9 +35,7 @@ Create a `.env` file in the root directory of your project and add the values va
 cp .env-example .env
 ```
 
-```bash
 Then, open the `.env` file and set the appropriate values for each variable according to your setup.
-```
 
 | Variable | Description | Example Value |
 |----------|-------------|----------------|
@@ -47,20 +45,15 @@ Then, open the `.env` file and set the appropriate values for each variable acco
 | DJANGO_SECRET_KEY | Secret key for session tokens | long_random_string |
 | PORT | Local server port | 3000 |
 
-```bash
-2. Build Docker images
-```bash
-docker-compose build
-```
-
-1. Up and running Docker app
+1. If is your first tme running the app
 
 ```bash
 docker compose up --build -d
 ```
 
-```bash
+2.For subsequent runs, build the Docker images
 
+```bash
 docker compose up -d
 ```
 
