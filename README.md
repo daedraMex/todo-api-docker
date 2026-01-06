@@ -59,4 +59,11 @@ docker compose up -d
 
 You can then visit <http://localhost:8000> to see your FastAPI welcome message.
 
+# 2. Reinicia los contenedores de forma limpia
+```bash
+
+docker compose down
+docker compose up -d
+```
+
 ## Goals

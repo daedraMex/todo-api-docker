@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Query
+from fastapi import APIRouter,Query,Body
 
 router = APIRouter()
 
@@ -18,10 +18,39 @@ def get_tasks(query: str | None= Query(default = None,description="Search query 
     
     return {"data": TASKS}
 
-@router.post("/tasks")
-def create_task():
+
+@router.post("/")
+def create_task(task:dict = Body(...)):
+    if "title" not in task or "description" not in task or "priority" not in task:
+        return {"error": "Title, description, and priority are required fields."}
+
+    if not str(task["title"]).strip():
+        return {"error": "Title cannot be empty."}
+    
+    if "description" in task and len(task["description"]) > 500:
+        return {"error": "Description cannot exceed 500 characters."}
+    if task["priority"] not in ["low", "medium", "high"]:
+        return {"error": "Priority must be one of: low, medium, high."}
+    
+    new_id = TASKS[-1]["id"] + 1 if TASKS else 1
+
+    new_task = {
+        "id": new_id,
+        "title": task["title"],
+        "description": task["description"],
+        "priority": task["priority"],
+        "completed": False
+    }
+    TASKS.append(new_task)
     return {"msg": "Task created successfully"}
+
+@router.patch("/tasks/{task_id}")
+def update_task(task_id: int):
+    
+    return {"msg": f"Task {task_id} updated successfully"}
+
 
 def delete_task(task_id: int):
     return {"msg": f"Task {task_id} deleted successfully"}
+
 
