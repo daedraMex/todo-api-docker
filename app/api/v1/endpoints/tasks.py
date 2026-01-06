@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Query,Body
+from fastapi import APIRouter,Query,Body, HTTPException
 
 router = APIRouter()
 
@@ -44,10 +44,18 @@ def create_task(task:dict = Body(...)):
     TASKS.append(new_task)
     return {"msg": "Task created successfully"}
 
-@router.patch("/tasks/{task_id}")
-def update_task(task_id: int):
-    
-    return {"msg": f"Task {task_id} updated successfully"}
+@router.put("/{task_id}")
+
+def update_task(task_id: int,data:dict = Body(...)):
+    for task in TASKS:
+        if task["id"] == task_id:
+            if "title" in data:task["title"] = data["title"]
+            if "description" in data:task["description"] = data["description"]
+            if "priority" in data:task["priority"] = data["priority"]
+            if "completed" in data:task["completed"] = data["completed"]
+            return {"msg": f"Task {task_id} updated successfully"}
+    raise HTTPException(status_code=404, detail="Task not found")    
+
 
 
 def delete_task(task_id: int):
