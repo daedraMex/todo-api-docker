@@ -1,6 +1,6 @@
 from fastapi import APIRouter,Query,Body, HTTPException,Path
 from app.schemas import task as task_schemas
-from typing import List
+from typing import List,Optional
 router = APIRouter()
 
 TASKS = [
@@ -9,7 +9,14 @@ TASKS = [
 ]
 
 @router.get("/", response_model=List[task_schemas.TaskResponse])
-def get_tasks(query: str | None= Query(default = None,description="Search query for task title")):
+def get_tasks(query: Optional[str] = Query(
+    default = None,
+    description="Search query for task title",
+    alias="query",
+    min_length=3,
+    max_length=50,
+    regex="^[a-zA-Z]+$",
+    )):
     if query:
       filtered_tasks = []
       for task in TASKS:
