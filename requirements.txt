@@ -1,11 +1,6 @@
-uvicorn[standard]
-sqlalchemy
-psycopg2-binary
-python-dotenv
-passlib[bcrypt]
-python-jose[cryptography]
 fastapi[all]
-sqlmodel
+sqlmodel              
+psycopg2-binary
 pwdlib[argon2]
 pyjwt
 python-multipart
