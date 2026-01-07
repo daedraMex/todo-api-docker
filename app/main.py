@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 # 1. Fix del typo (sin espacio)
-from app.database import SessionLocal, engine, Base 
+from app.core.database import SessionLocal, engine, Base 
 from app.models.category import Category
 from app.api.v1.api_router import api_router
 

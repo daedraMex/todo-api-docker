@@ -1,7 +1,11 @@
-fastapi
 uvicorn[standard]
 sqlalchemy
 psycopg2-binary
 python-dotenv
 passlib[bcrypt]
 python-jose[cryptography]
+fastapi[all]
+sqlmodel
+pwdlib[argon2]
+pyjwt
+python-multipart

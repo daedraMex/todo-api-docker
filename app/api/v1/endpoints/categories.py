@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database import get_db # Asegúrate de que NO haya espacios aquí
+from app.core.database import get_db # Asegúrate de que NO haya espacios aquí
 from app.models.category import Category
 from app.schemas import categorie as categorie_schemas
 

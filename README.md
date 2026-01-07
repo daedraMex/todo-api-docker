@@ -60,5 +60,12 @@ docker compose up -d
 You can then visit <http://localhost:8000> to see your FastAPI welcome message.
 
 
-#
+## pgAdmin
+
+This project includes pgAdmin for database management. To access pgAdmin, open your web browser and navigate to <http://localhost:5050>.
+and log in using the following credentials:
+
+- Email: (find in your .env file)
+- Password: (find in your .env file)
+
 ## Goals

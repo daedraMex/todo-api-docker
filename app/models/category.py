@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Integer, String, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
-from app.database import Base
+from app.core.database import Base
 
 class Category(Base):
     __tablename__ = "categories"
