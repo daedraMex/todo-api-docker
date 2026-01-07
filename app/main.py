@@ -1,19 +1,18 @@
 import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-
-# 1. Fix del typo (sin espacio)
+from fastapi.middleware.cors import CORSMiddleware
+from app.core.config import settings
 from app.core.database import SessionLocal, engine, Base 
 from app.models.category import Category
 from app.api.v1.api_router import api_router
 
-# 2. Definir lifespan PRIMERO
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Crear tablas
+    # Crea tabas
     Base.metadata.create_all(bind=engine)
     
-    # Seeding
+    # Seed 
     db = SessionLocal()
     try:
         init_categories = ["Trabajo", "Estudio", "Casa", "Familia", "Diversión"]
@@ -25,13 +24,23 @@ async def lifespan(app: FastAPI):
         db.close()
     yield
 
-# 3. Crear la app pasando el lifespan
 app = FastAPI(
     title="Todo App API",
     version="1.0.0",
     lifespan=lifespan
 )
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"], 
+    allow_headers=["*"], 
+)
 app.include_router(api_router, prefix="/api/v1")
 
 @app.get("/")
