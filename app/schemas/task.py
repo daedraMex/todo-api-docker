@@ -1,5 +1,5 @@
 from pydantic import BaseModel,Field
-from typing import Optional
+from typing import Optional,List
 
 class TaskBase(BaseModel):
     title: str = Field(...,min_length=1, max_length=100, description="Title of the task")
@@ -20,3 +20,15 @@ class TaskUpdate(BaseModel):
 
 class TaskResponse(TaskBase):
     id: int
+
+class PagintedTaskResponse(BaseModel):
+    page:int
+    per_page:int
+    total: int
+    total_pages:int
+    has_prev: bool
+    has_next: bool
+    order_by: str
+    direction: str
+    query: Optional[str]
+    tasks: List[TaskResponse]

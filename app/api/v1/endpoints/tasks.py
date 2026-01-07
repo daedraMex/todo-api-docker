@@ -16,7 +16,7 @@ TASKS = [
     {"id": 10, "title": "Task 10", "description": "Description for Task 10", "is_completed": True},
 ]
 
-@router.get("/", response_model=List[task_schemas.TaskResponse])
+@router.get("/", response_model=List[task_schemas.PagintedTaskResponse])
 def get_tasks(query: Optional[str] = Query(
     default = None,
     description="Search query for task title",
@@ -50,6 +50,7 @@ def get_tasks(query: Optional[str] = Query(
         filtered_data = [t for t in TASKS if query.lower() in t["title"].lower()]
     
     is_reverse = (direction == "desc")
+
     sorted_data = sorted(
         filtered_data, 
         key=lambda x: x[order_by], 
@@ -57,8 +58,21 @@ def get_tasks(query: Optional[str] = Query(
     )
     
     results = sorted_data[offset : offset + limit]
+    total = len(filtered_data)
     
-    return results
+    return task_schemas.PagintedTaskResponse(
+        page=(offset // limit) + 1,
+        per_page=limit,
+
+        total=total,
+        total_pages=(total + limit - 1) // limit,
+        has_prev=offset > 0,
+        has_next=offset + limit < total,
+        order_by=order_by,
+        direction=direction,
+        query=query,
+        tasks=results
+    )
 
 
 @router.post("/")
