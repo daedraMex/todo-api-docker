@@ -4,8 +4,8 @@ from typing import Literal
 class UserBase(BaseModel):
     username: str = Field(..., min_length=3, max_length=50, description="Username of the user")
     email: EmailStr = Field(..., description="Email address of the user")
-    role: str = Field("user", description="Role of the user: user or admin")
-    model_config = ConfigDict(from_attributes=True)
+   
+
 Role = Literal["admin", "user"]
 
 class UserPublic(UserBase):
@@ -13,8 +13,6 @@ class UserPublic(UserBase):
     role: Role
 
 class UserCreate(BaseModel):
-    username: str = Field(..., min_length=3, max_length=50, description="Username of the user")
-    email: EmailStr = Field(..., description="Email address of the user")
     password: str = Field(..., min_length=6,  max_length=50,description="Password for the user")
 
 class UserLogin(BaseModel):
@@ -24,4 +22,14 @@ class UserLogin(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
-    user: UserPublic
+class UserResponse(UserBase):
+    id: int
+    role: str
+    
+    class Config:
+        from_attributes = True
+
+class UserLoginResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user: UserResponse
