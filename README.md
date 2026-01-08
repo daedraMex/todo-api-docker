@@ -68,4 +68,25 @@ and log in using the following credentials:
 - Email: (find in your .env file)
 - Password: (find in your .env file)
 
-## Goals
+## seed
+
+```bash
+ curl -X POST http://localhost:8000/api/v1/utils/seed \
+    -H "Content-Type: application/json"
+```
+
+## get - tasks
+
+```bash
+
+  1. Login first:
+
+  curl -X POST http://localhost:8000/api/v1/auth/login \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "username=user@gmail.com&password=string"
+
+  2. Get tasks (copy the token from login response):
+
+  curl -X GET "http://localhost:8000/api/v1/tasks/?page=1&per_page=6&order_by=created_at&direction=desc" \
+    -H "Authorization: Bearer YOUR_ACCESS_TOKEN_HERE"
+```
